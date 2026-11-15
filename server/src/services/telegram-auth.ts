@@ -73,11 +73,13 @@ export function pollCode(code: string): {
 }
 
 /** Handles a Telegram bot webhook update (secret header verified upstream). */
-export async function handleTelegramUpdate(update: { message?: { chat?: { id?: number }; text?: string; from?: { username?: string; first_name?: string } } }): Promise<void> {
+export async function handleTelegramUpdate(update: { message?: { chat?: { id?: number; type?: string }; text?: string; from?: { id?: number; username?: string; first_name?: string } } }): Promise<void> {
   const msg = update.message;
   const chatId = msg?.chat?.id;
   const text = (msg?.text ?? '').trim();
   if (!chatId || !text) return;
+  // Login codes must never be approved from a group or a forwarded identity.
+  if (msg?.chat?.type !== 'private' || msg.from?.id !== chatId) return;
 
   const match = text.match(/^\/start(?:\s+([A-Z0-9]{4,12}))?$/i);
   if (!match) return;
@@ -92,7 +94,7 @@ export async function handleTelegramUpdate(update: { message?: { chat?: { id?: n
     'SELECT status, expires_at FROM auth_codes WHERE code = ?',
     code
   );
-  if (!rec || rec.expires_at < Date.now()) {
+  if (!rec || rec.status !== 'pending' || rec.expires_at < Date.now()) {
     await sendMessage(chatId, 'Код недійсний або прострокав. Згенеруй новий у програмі.');
     return;
   }

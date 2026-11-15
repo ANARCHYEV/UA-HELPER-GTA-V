@@ -27,7 +27,7 @@ export function registerAuth(app: FastifyInstance): void {
   });
 
   app.post('/v1/auth/telegram/webhook', async (req, reply) => {
-    if (!config.tgBotToken) {
+    if (!config.tgBotToken || !config.tgWebhookSecret) {
       return reply.code(503).send({ error: 'telegram bot is not configured' });
     }
     if (config.tgWebhookSecret) {
