@@ -1,0 +1,19 @@
+{
+  "backend": {
+    "baseUrl": "https://api.example.org",
+    "timeoutMs": 12000
+  },
+  "auth": {
+    "mode": "both",
+    "telegramBotUsername": "your_bot_name",
+    "discordClientId": "123456789012345678",
+    "discordRedirectUri": "https://api.example.org/v1/auth/discord/callback",
+    "subscription": {
+      "enabled": true,
+      "provider": "either",
+      "telegramChannel": "@your_channel",
+      "discordGuildId": "123456789012345678",
+      "discordRoleId": "123456789012345678"
+    }
+  }
+}

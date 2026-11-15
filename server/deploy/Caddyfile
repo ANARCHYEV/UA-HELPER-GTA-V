@@ -1,0 +1,22 @@
+{$API_DOMAIN} {
+    encode zstd gzip
+
+    header {
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Referrer-Policy "no-referrer"
+        Permissions-Policy "camera=(), microphone=(self), geolocation=()"
+    }
+
+    request_body {
+        max_size 12MB
+    }
+
+    handle_path /downloads/* {
+        root * /srv/downloads
+        header Access-Control-Allow-Origin "*"
+        file_server
+    }
+
+    reverse_proxy api:3000
+}

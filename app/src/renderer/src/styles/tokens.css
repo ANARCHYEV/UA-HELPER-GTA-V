@@ -1,0 +1,74 @@
+/**
+ * UA Helper design tokens.
+ * Single source of truth for colors / radii / motion.
+ * Brand accent values are overridden at runtime from app.config.json.
+ */
+
+:root {
+  /* Background scale: near-black navy -> deep blue */
+  --bg-0: #050b1a;
+  --bg-1: #081226;
+  --bg-2: #0c1b36;
+  --bg-3: #122650;
+
+  /* Glassmorphism */
+  --glass-bg: rgba(13, 33, 66, 0.55);
+  --glass-bg-strong: rgba(16, 42, 84, 0.72);
+  --glass-border: rgba(120, 180, 255, 0.14);
+  --glass-blur: 18px;
+
+  /* Brand (overridden from config at runtime) */
+  --accent: #00a8ff;
+  --accent-hover: #33bdff;
+  --accent-soft: rgba(0, 168, 255, 0.14);
+  --accent-2: #22d3ee;
+  --accent-2-soft: rgba(34, 211, 238, 0.14);
+  --accent-gradient: linear-gradient(135deg, var(--accent), var(--accent-2));
+
+  /* Text */
+  --text-1: #e6f1ff;
+  --text-2: #9fb4d9;
+  --text-3: #5e7598;
+
+  /* Status */
+  --success: #2dd4a7;
+  --warning: #ffb454;
+  --danger: #ff5c7a;
+
+  /* Hero card surfaces (charcoal-navy, reference-style) */
+  --surface-card-1: #161b28;
+  --surface-card-2: #10141e;
+  --card-border: rgba(230, 241, 255, 0.07);
+  --card-highlight: rgba(230, 241, 255, 0.05);
+  --track: rgba(230, 241, 255, 0.07);
+
+  /* Shape & motion */
+  --radius-s: 10px;
+  --radius-m: 14px;
+  --radius-l: 18px;
+  --shadow-1: 0 8px 32px rgba(2, 8, 20, 0.55);
+  --shadow-accent: 0 8px 28px rgba(0, 168, 255, 0.25);
+  --shadow-xl: 0 24px 70px rgba(2, 6, 16, 0.6), 0 4px 18px rgba(2, 6, 16, 0.45);
+  --dur-fast: 160ms;
+  --dur-med: 240ms;
+  --dur-slow: 420ms;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Typography */
+  --font: 'Manrope Variable', 'Manrope', 'Segoe UI', system-ui, sans-serif;
+  --fs-xs: 12px;
+  --fs-s: 13px;
+  --fs-m: 15px;
+  --fs-l: 18px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+}
+
+/* Respect reduced-motion preferences everywhere */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur-med: 1ms;
+    --dur-slow: 1ms;
+  }
+}

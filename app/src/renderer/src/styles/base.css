@@ -1,0 +1,443 @@
+/* Base layout, glass surfaces, buttons, inputs, scrollbars. */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font);
+  font-size: var(--fs-m);
+  color: var(--text-1);
+  background: var(--bg-0);
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Text may be selected in content areas */
+.selectable,
+input,
+textarea,
+.selectable * {
+  user-select: text;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 180, 255, 0.18);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 180, 255, 0.32);
+}
+
+/* ------------------------------------------------------------------ */
+/* Glass surface                                                       */
+/* ------------------------------------------------------------------ */
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-m);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+.card {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-l);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  padding: 18px;
+  transition: border-color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.card:hover {
+  border-color: rgba(120, 180, 255, 0.3);
+}
+
+.card-title {
+  font-size: var(--fs-l);
+  font-weight: 700;
+}
+
+.card-sub {
+  font-size: var(--fs-s);
+  color: var(--text-2);
+  margin-top: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Buttons                                                             */
+/* ------------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font);
+  font-size: var(--fs-m);
+  font-weight: 600;
+  color: var(--text-1);
+  background: var(--bg-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-s);
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease),
+    transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.btn:hover:not(:disabled) {
+  background: var(--bg-3);
+  border-color: rgba(120, 180, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--accent-gradient);
+  border: none;
+  color: #04121f;
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--accent-gradient);
+  filter: brightness(1.1);
+  border: none;
+  box-shadow: 0 10px 34px rgba(0, 168, 255, 0.35);
+}
+
+.btn-ghost {
+  background: transparent;
+  border-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: transparent;
+}
+
+.btn-danger {
+  background: transparent;
+  border-color: rgba(255, 92, 122, 0.4);
+  color: var(--danger);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: rgba(255, 92, 122, 0.12);
+}
+
+.btn-s {
+  padding: 6px 10px;
+  font-size: var(--fs-s);
+}
+
+.btn-icon {
+  padding: 8px;
+  border-radius: var(--radius-s);
+}
+
+/* ------------------------------------------------------------------ */
+/* Inputs                                                              */
+/* ------------------------------------------------------------------ */
+
+.input {
+  width: 100%;
+  font-family: var(--font);
+  font-size: var(--fs-m);
+  color: var(--text-1);
+  background: rgba(5, 11, 26, 0.6);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-s);
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.input::placeholder {
+  color: var(--text-3);
+}
+
+.input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.input-error {
+  border-color: var(--danger);
+}
+
+textarea.input {
+  resize: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Misc                                                                */
+/* ------------------------------------------------------------------ */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+
+.badge-success {
+  color: var(--success);
+  background: rgba(45, 212, 167, 0.12);
+}
+
+.badge-warning {
+  color: var(--warning);
+  background: rgba(255, 180, 84, 0.12);
+}
+
+.badge-danger {
+  color: var(--danger);
+  background: rgba(255, 92, 122, 0.12);
+}
+
+.badge-muted {
+  color: var(--text-2);
+  background: rgba(94, 117, 152, 0.16);
+}
+
+.skeleton {
+  background: linear-gradient(
+    100deg,
+    rgba(94, 117, 152, 0.12) 40%,
+    rgba(94, 117, 152, 0.24) 50%,
+    rgba(94, 117, 152, 0.12) 60%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-wave 1.4s linear infinite;
+  border-radius: var(--radius-s);
+}
+
+@keyframes skeleton-wave {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.divider {
+  height: 1px;
+  background: var(--glass-border);
+  border: none;
+  margin: 14px 0;
+}
+
+/* Drag region for frameless titlebars */
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+/* Fade / slide micro animations */
+.fade-in {
+  animation: fade-in var(--dur-med) var(--ease);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.6s var(--ease) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton,
+  .pulse-dot,
+  .fade-in {
+    animation: none;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero surfaces (splash / login cards)                                */
+/* ------------------------------------------------------------------ */
+
+/*
+ * Topographic contour texture, reference-style: faint wandering contour
+ * bands. Color is baked at ~50% white; the element sets final opacity
+ * (usually 0.04-0.06). Tiles seamlessly both ways at 420px.
+ */
+.contour-pattern {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420' viewBox='0 0 420 420'%3E%3Cg fill='none' stroke='%23e6f1ff' stroke-width='1.1'%3E%3Cpath d='M0 46 C 60 22 120 70 190 48 S 330 20 420 52'/%3E%3Cpath d='M0 108 C 70 84 130 132 205 106 S 340 82 420 112'/%3E%3Cpath d='M0 168 C 60 196 140 138 210 170 S 335 208 420 172'/%3E%3Cpath d='M0 232 C 80 204 130 262 200 232 S 345 198 420 236'/%3E%3Cpath d='M0 294 C 60 320 150 266 215 296 S 330 330 420 296'/%3E%3Cpath d='M0 356 C 90 330 130 384 205 356 S 340 326 420 360'/%3E%3Cpath d='M0 412 C 60 436 140 392 210 414 S 335 440 420 410'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 420px 420px;
+}
+
+/* Card entrance / exit used by the splash hero card */
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.card-in {
+  animation: card-in var(--dur-slow) var(--ease) both;
+}
+
+.card-out {
+  transition: opacity 300ms var(--ease), transform 300ms var(--ease);
+  opacity: 0;
+  transform: translateY(-10px) scale(0.985);
+}
+
+/* Staggered list rows (boot checklist) */
+@keyframes row-in {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.row-in {
+  animation: row-in 320ms var(--ease) both;
+}
+
+/* Spinner ring for the active boot step */
+@keyframes spin-ring {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin-ring {
+  animation: spin-ring 0.9s linear infinite;
+}
+
+/* Check pop for a finished boot step */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.18);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.pop-in {
+  animation: pop-in 280ms var(--ease) both;
+}
+
+/* Moving shine across the progress fill */
+@keyframes bar-shine {
+  0% {
+    background-position: 0% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.bar-shine {
+  background-image: linear-gradient(
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  animation: bar-shine 1.6s linear infinite;
+}
+
+/* Soft breathing glow behind the logo mark */
+@keyframes glow-breathe {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06);
+  }
+}
+
+.glow-breathe {
+  animation: glow-breathe 3.2s var(--ease) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-in,
+  .row-in,
+  .pop-in,
+  .bar-shine,
+  .glow-breathe {
+    animation: none;
+  }
+  .spin-ring {
+    animation-duration: 2.4s;
+  }
+  .card-out {
+    transition: none;
+  }
+}

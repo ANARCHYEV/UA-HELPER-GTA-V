@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+out/
+dist/
+release/
+release-*/
+release-*.asar
+*.key
+*.pem
+local-user-data/
+*-check.png
+
+# Local data & secrets
+data/
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*
+!.env.example
+!*.env.production.example
+*.bak
+*.backup
+server/.env
+
+# Logs
+*.log
+logs/
+
+# OS artifacts
+.DS_Store
+Thumbs.db

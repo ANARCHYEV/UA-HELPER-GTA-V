@@ -1,0 +1,24 @@
+[Unit]
+Description=UA Helper API
+After=network.target
+
+[Service]
+Type=simple
+# pm2 fallback usage: run `pm2 start dist/index.js --name ua-helper-api`
+# or use systemd directly (this unit, no Docker required):
+User=uahelper
+Group=uahelper
+WorkingDirectory=/opt/ua-helper/server
+ExecStart=/usr/bin/node dist/index.js
+Environment=NODE_ENV=production
+EnvironmentFile=/opt/ua-helper/server/.env
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/ua-helper
+
+[Install]
+WantedBy=multi-user.target

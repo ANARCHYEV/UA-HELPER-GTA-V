@@ -1,0 +1,61 @@
+# electron-builder configuration.
+# NOTE: `productName`, `appId` and `publish.url` mirror config/app.config.json.
+#       When rebranding, update them together with app.config.json and rebuild.
+appId: dev.uahelper.app
+productName: UA Helper
+copyright: UA Helper
+
+directories:
+  output: release
+  buildResources: build
+
+files:
+  - out/**
+  - package.json
+  - config/**
+
+extraResources:
+  - from: build/
+    to: build/
+  - from: config/app.config.override.example.json
+    to: config/app.config.override.example.json
+  - from: config/AUTH_SETUP.md
+    to: config/AUTH_SETUP.md
+
+# better-sqlite3 is rebuilt by `npm run rebuild:electron` before packaging.
+# Disabling electron-builder's second rebuild avoids node-gyp failing on a
+# Windows workspace path that contains spaces.
+npmRebuild: false
+
+# Native addon must be physically extracted from app.asar for Node to load it.
+asarUnpack:
+  - node_modules/better-sqlite3/build/Release/*.node
+  - node_modules/koffi/build/**/*.node
+
+win:
+  # This unsigned release intentionally skips certificate tooling. A trusted
+  # code-signing certificate can be configured later in CI without changing
+  # the installer layout.
+  signAndEditExecutable: false
+  target:
+    - target: nsis
+    - target: portable
+  icon: build/icon.ico
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  artifactName: ${productName}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  createDesktopShortcut: always
+  createStartMenuShortcut: true
+
+portable:
+  artifactName: UA-Helper-${version}-portable-ui.${ext}
+  # Embed the unpacked application directly in the portable executable. This
+  # avoids a second temporary 7z archive being held by Windows/antivirus while
+  # the release file is being produced.
+  useZip: true
+
+# Add a publish block only after a real HTTPS release endpoint is provisioned.

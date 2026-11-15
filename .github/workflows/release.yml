@@ -1,0 +1,50 @@
+name: Windows release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: write
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint
+      - name: Configure public GitHub updates
+        shell: pwsh
+        run: |
+          $parts = $env:GITHUB_REPOSITORY.Split('/')
+          $config = Get-Content app/config/app.config.json -Raw | ConvertFrom-Json
+          $config.updates = @{ provider='github'; url=''; githubOwner=$parts[0]; githubRepo=$parts[1] }
+          $config | ConvertTo-Json -Depth 20 | Set-Content app/config/app.config.json -Encoding utf8
+          $version = (Get-Content app/package.json -Raw | ConvertFrom-Json).version
+          if ($env:GITHUB_REF_NAME -ne "v$version") { throw 'Tag must match app/package.json version' }
+          @('publish:', '  provider: github', "  owner: $($parts[0])", "  repo: $($parts[1])") | Add-Content app/electron-builder.yml
+      - run: npm run rebuild:electron
+      - run: npm run build -w app
+      - name: Package draft release
+        working-directory: app
+        run: npx electron-builder --win --publish always
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checksums
+        shell: pwsh
+        run: |
+          Get-ChildItem app/release/*.exe | ForEach-Object { $hash = (Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLower(); "$hash  $($_.Name)" } | Set-Content app/release/SHA256SUMS.txt
+          gh release upload $env:GITHUB_REF_NAME app/release/SHA256SUMS.txt --clobber
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-release
+          path: |
+            app/release/*.exe
+            app/release/*.yml
+            app/release/*.blockmap
+            app/release/SHA256SUMS.txt

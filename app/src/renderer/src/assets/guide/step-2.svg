@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="270" viewBox="0 0 480 270">
+  <!-- Guide step placeholder: replace with assets/guide/step-N.gif (real screen recording) -->
+  <rect width="480" height="270" rx="14" fill="#0C1B36"/>
+  <rect x="0.5" y="0.5" width="479" height="269" rx="13.5" fill="none" stroke="#3A5B8C" stroke-dasharray="8 6"/>
+  <circle cx="240" cy="112" r="34" fill="none" stroke="#00A8FF" stroke-width="3" opacity="0.85"/>
+  <path d="M240 96l6 10h-12z" fill="#00A8FF"/>
+  <path d="M226 118c4-6 9-9 14-9s10 3 14 9" stroke="#00A8FF" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <text x="240" y="182" text-anchor="middle" font-family="sans-serif" font-size="15" font-weight="700" fill="#E6F1FF">GIF-плейсхолдер</text>
+  <text x="240" y="204" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#5E7598">заміни на assets/guide/step-N.gif</text>
+</svg>
